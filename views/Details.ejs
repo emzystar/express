@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Employee Details</title>
+    <style>
+      ul {
+        display: flex;
+        padding: 2rem;
+        justify-content: space-between;
+      }
+      .b {
+        padding: 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="/employees">Home Page</a></li>
+        <li><a href="/create">Add Staffs</a></li>
+      </ul>
+    </nav>
+    <div class="b">
+      <h1>Detials about this Employees</h1>
+      <h2><%= employee.name %></h2>
+      <h3><%= employee.role%></h3>
+      <p><%= employee.age %></p>
+      <a class="del" data-items="<%= employee._id %>"
+        ><button>Delete</button></a
+      >
+    </div>
+
+    <script>
+      const trash = document.querySelector(".del");
+      console.log(trash);
+
+      trash.addEventListener("click", () => {
+        const url = `/employees/${trash.dataset.items}`;
+        fetch(url, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            location.href = data.redirect;
+          })
+          .catch((err) => console.log(err));
+      });
+    </script>
+  </body>
+</html>
